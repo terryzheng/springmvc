@@ -29,7 +29,6 @@ ext {
 
 dependencies {
 	compile "org.springframework:spring-core:$springVersion"
-	compile "org.springframework:spring-web:$springVersion"
 	compile "org.springframework:spring-webmvc:$springVersion"
 	compile "org.springframework:spring-jdbc:$springVersion"
 	
