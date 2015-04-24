@@ -22,24 +22,16 @@
 	<context:property-placeholder location="classpath:config.properties" />
 	<util:properties id="config" location="classpath:config.properties" />
 
-	<!-- 连接服务配置 -->
 	<rabbit:connection-factory id="connectionFactory"
 		host="${amqp.host}" virtual-host="${amqp.vhost}" username="${amqp.username}"
 		password="${amqp.password}" port="${amqp.port}" />
 
-	<!-- exchange queue binging key 绑定 -->
-	<rabbit:direct-exchange name="my-exchange"
-		durable="true" auto-delete="false" id="my-exchange">
-		<!-- <rabbit:bindings> <rabbit:binding queue="queue1" key="queue1_key" 
-			/> <rabbit:binding queue="queue2" key="queue2_key" /> </rabbit:bindings> -->
-	</rabbit:direct-exchange>
-
-	<!-- spring amqp默认的是jackson 的一个插件,目的将生产者生产的数据转换为json存入消息队列，由于fastjson的速度快于jackson,这里替换为fastjson的一个实现 -->
-	<bean id="jsonMessageConverter" class="com.demo.springmvc.common.FastJsonMessageConverter"></bean>
-
-	<!-- spring template声明 -->
-	<rabbit:template exchange="my-exchange" id="amqpTemplate"
-		connection-factory="connectionFactory" message-converter="jsonMessageConverter" />
+	<bean id="producer" class="com.zhaopin.rabbitMQ.producer.ProducerMq">
+		<constructor-arg ref="connectionFactory"></constructor-arg>
+		<property name="exchange" value="99msg" />
+		<property name="autoBalance" value="true" />
+		<property name="balanceSize" value="3" />
+	</bean>
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.demo.springmvc.repository.UserRepository;
-import com.demo.springmvc.service.ProducerMq;
+import com.zhaopin.rabbitMQ.producer.ProducerMq;
 
 @Controller
 public class HelloWorldController {
@@ -20,7 +20,7 @@ public class HelloWorldController {
 	@Value("#{config['jdbc.driverClass']}")
 	private String driverClass;
 
-	@Resource
+	@Autowired
 	private ProducerMq producer;
 
 	@RequestMapping("/hello")
@@ -29,7 +29,7 @@ public class HelloWorldController {
 			Model model) {
 		String corpName = userRepository.getUserStatusByCorpId(corpId);
 		for (int i = 0; i < 100; i++) {
-			producer.sendDataToCrQueue("data" + i);
+			producer.convertAndSend("99msg", "data" + i);
 		}
 		model.addAttribute("name", driverClass + corpName);
 		return "helloworld";
