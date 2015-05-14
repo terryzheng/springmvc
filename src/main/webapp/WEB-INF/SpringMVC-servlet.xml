@@ -28,7 +28,6 @@
 
 	<bean id="producer" class="com.zhaopin.rabbitMQ.producer.ProducerMq">
 		<constructor-arg ref="connectionFactory"></constructor-arg>
-		<property name="exchange" value="99msg" />
 		<property name="autoBalance" value="true" />
 		<property name="balanceSize" value="3" />
 	</bean>

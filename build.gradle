@@ -41,7 +41,12 @@ dependencies {
     runtime	'mysql:mysql-connector-java:5.1.32'
     compile 'commons-dbcp:commons-dbcp:1.4'
     
-    compile "com.zhaopin.rabbitMQ:producer:1.4"
+    compile "com.zhaopin.rabbitMQ:producer:1.6"
+    compile "org.apache.zookeeper:zookeeper:3.4.5"
 
     testCompile "junit:junit:$junitVersion"
+}
+
+jettyRun{
+	httpPort 8083
 }
